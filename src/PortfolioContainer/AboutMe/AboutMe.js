@@ -1,18 +1,12 @@
 import React from 'react';
 import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeding";
-import Animations from "../../utilities/Animations";
+
 import ScrollService from "../../utilities/ScrollService";
 import './AboutMe.css'
 
 
 function AboutMe(props) {
-    let fadeInScreenHandler = (screen) => {
-        if (screen.fadeInScreen !== props.id) {
-            return
-            Animations.animations.fadeInScreen(props.id)
-        }
-    }
-    const fadeInSubscription = ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
+
 
     const SCREEN_CONSTANTS = {
         description: "Full stack web developer with background knowledge of stacks with redux, along with a knack of building applications with utmost efficiency. Strong professional  to be an asset for an organization",
