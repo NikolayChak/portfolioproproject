@@ -1,38 +1,40 @@
-import React, {useState} from 'react';
-import axios from "axios";
-import {toast} from "react-toastify";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-import imgBack from "../../../src/images/mailz.jpeg"
-import load1 from "../../../src/images/load2.gif"
-import ScrollService from "../../utilities/ScrollService";
-import ScreenHeading from "../../utilities/ScreenHeading/ScreenHeding";
-import Animations from "../../utilities/Animations";
-import "./ContactMe.css"
-
+import imgBack from '../../../src/images/mailz.jpeg';
+import load1 from '../../../src/images/load2.gif';
+import ScrollService from '../../utilities/ScrollService';
+import ScreenHeading from '../../utilities/ScreenHeading/ScreenHeding';
+import Animations from '../../utilities/Animations';
+import './ContactMe.css';
 
 function ContactMe(props) {
-
     let fadeInScreenHandler = (screen) => {
         if (screen.fadeInScreen !== props.id) return;
         Animations.animations.fadeInScreen(props.id);
     };
+
     ScrollService.currentScreenFadeIn.subscribe(fadeInScreenHandler);
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [message, setMessage] = useState("");
-    const [banner, setBanner] = useState("");
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [banner, setBanner] = useState('');
     const [bool, setBool] = useState(false);
 
     const handleName = (e) => {
         setName(e.target.value);
     };
+
     const handleEmail = (e) => {
         setEmail(e.target.value);
     };
+
     const handleMessage = (e) => {
         setMessage(e.target.value);
     };
-    console.log(name);
+
     const submitForm = async (e) => {
         e.preventDefault();
         try {
@@ -41,8 +43,10 @@ function ContactMe(props) {
                 email,
                 message,
             };
+
             setBool(true);
-            const res = await axios.post(`/contact`, data);
+            const res = await axios.post('/contact', data);
+
             if (name.length === 0 || email.length === 0 || message.length === 0) {
                 setBanner(res.data.msg);
                 toast.error(res.data.msg);
@@ -52,28 +56,27 @@ function ContactMe(props) {
                 toast.success(res.data.msg);
                 setBool(false);
 
-                setName("");
-                setEmail("");
-                setMessage("");
+                setName('');
+                setEmail('');
+                setMessage('');
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-
     return (
-        <div className="main-container fade-in" id={props.id || ""}>
-            <ScreenHeading subHeading={"Lets Keep In Touch"} title={"Contact Me"} />
+        <div className="main-container fade-in" id={props.id || ''}>
+            <ScreenHeading subHeading={'Lets Keep In Touch'} title={'Contact Me'} />
             <div className="central-form">
                 <div className="col">
                     <h2 className="title">
-                        <div/>
-                    </h2>{" "}
+                        <div />
+                    </h2>{' '}
                     <a href="https://web.facebook.com/?_rdc=1&_rdr">
                         <i className="fa fa-facebook-square" />
                     </a>
-                    <a href="#">
+                    <a href="https://mail.google.com/">
                         <i className="fa fa-google-plus-square" />
                     </a>
                     <a href="https://www.instagram.com/instructor_ehizeex/">
@@ -89,7 +92,7 @@ function ContactMe(props) {
                 <div className="back-form">
                     <div className="img-back">
                         <h4>Send Your Email Here!</h4>
-                        <img src={imgBack} alt="image not found" />
+                        <img src={imgBack} alt="Background for contact form" />
                     </div>
                     <form onSubmit={submitForm}>
                         <p>{banner}</p>
@@ -108,17 +111,16 @@ function ContactMe(props) {
                                 <i className="fa fa-paper-plane" />
                                 {bool ? (
                                     <b className="load">
-                                        <img src={load1} alt="image not responding" />
+                                        <img src={load1} alt="loading" />
                                     </b>
                                 ) : (
-                                    ""
+                                    ''
                                 )}
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-            {/*<Footer />*/}
         </div>
     );
 }
